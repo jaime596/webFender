@@ -2,15 +2,11 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import auth from "./auth";
 
-export const ProtectedRoute = ({
-  component: Component,
-  roles,
-  ...rest
-}) => {
+export const ProtectedRoute = ({ component: Component, roles, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={props => {
+      render={(props) => {
         if (auth.isAuthenticated()) {
           return <Component {...props} />;
         } else {
@@ -19,8 +15,8 @@ export const ProtectedRoute = ({
               to={{
                 pathname: "/",
                 state: {
-                  from: props.location
-                }
+                  from: props.location,
+                },
               }}
             />
           );

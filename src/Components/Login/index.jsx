@@ -8,7 +8,7 @@ import "./login.css";
 import auth from "../../functions/auth";
 import { loginUserPost } from "../../routes/index";
 
-import logo from "../../assets/rick_88915.png"
+import logo from "../../assets/rick_88915.png";
 
 const layout = {
   labelCol: {
@@ -78,10 +78,7 @@ export class Login extends Component {
         if (result !== null) {
           if (result.success === 1) {
             localStorage.setItem("IdEmpleado", result.body.id);
-            localStorage.setItem(
-              "NombreCompleto",
-              result.body.name
-            );
+            localStorage.setItem("NombreCompleto", result.body.name);
             localStorage.setItem("email", result.body.email);
             localStorage.setItem("description", result.body.description);
             localStorage.setItem("authorization", result.body.authorization);
@@ -90,19 +87,20 @@ export class Login extends Component {
               this.props.history.push("/main");
             });
           } else {
-            message.error("An unexpected error occurred, please try again later");
+            message.error(
+              "An unexpected error occurred, please try again later"
+            );
             this.setState({ loadingIngresar: false });
           }
         }
-      }).catch((error) => {
+      })
+      .catch((error) => {
         message.error("An unexpected error occurred, please try again later");
         this.setState({ loadingIngresar: false });
-      });;
+      });
   };
 
-
-
-  onFinishFailed = (errorInfo) => { };
+  onFinishFailed = (errorInfo) => {};
 
   render() {
     return (
@@ -110,23 +108,22 @@ export class Login extends Component {
         <Row justify="center" align="middle" style={{ paddingTop: "26px" }}>
           <Col>
             <Row justify="center">
-              <Image
-                width={200}
-                src={logo}
-                preview={false}
-              />
-
+              <Image width={200} src={logo} preview={false} />
             </Row>
           </Col>
           <Col>
-            <Row >
-              <span className="tituloLogin colorGris unselectable">Rick and Morty</span>
+            <Row>
+              <span className="tituloLogin colorGris unselectable">
+                Rick and Morty
+              </span>
             </Row>
-            <Row >
-              <span className="tituloLogin colorGris4 unselectable">Fender</span>
+            <Row>
+              <span className="tituloLogin colorGris4 unselectable">
+                Fender
+              </span>
             </Row>
           </Col>
-        </Row >
+        </Row>
         <Row justify="center">
           <span className="bienvenido unselectable">Welcome!</span>
         </Row>
@@ -192,17 +189,15 @@ export class Login extends Component {
                 style={{ width: "100%" }}
                 onClick={() => {
                   this.props.history.push("/register");
-
                 }}
               >
                 sign in!
               </Button>
             </Form>
-
           </Col>
           <Col span={8}></Col>
         </Row>
-      </div >
+      </div>
     );
   }
 }

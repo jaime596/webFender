@@ -18,7 +18,6 @@ class Auth {
   isAuthenticated() {
     return localStorage.getItem("authenticated");
   }
-
 }
 
 export default new Auth();

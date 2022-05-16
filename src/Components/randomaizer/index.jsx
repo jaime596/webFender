@@ -6,8 +6,7 @@ import { withRouter } from 'react-router-dom';
 
 import logo from "../../assets/rick_88915.png"
 import auth from '../../functions/auth';
-import { getinfoCharacterGET } from '../../routes/index';
-import CardFavCharacter from '../profile/cardFavCharacter';
+import CardRV from './cardVS';
 
 
 
@@ -85,7 +84,7 @@ class Randomaizer extends Component {
                         <Divider className='Divider' />
                     </Col>
                 </Row>
-                <CardFavCharacter character={{ idCharacter: Math.floor(Math.random() * (826 - 0)) + 0, idPokemon: Math.floor(Math.random() * (898 - 0)) + 0 }}></CardFavCharacter>
+                <CardRV character={{ idCharacter: Math.floor(Math.random() * (826 - 0)) + 0, idPokemon: Math.floor(Math.random() * (898 - 0)) + 0 }}></CardRV>
             </div>
         )
     }
