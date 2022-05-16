@@ -1,16 +1,3 @@
-@font-face {
-  font-family: Get-Schwifty;
-  src: url("../src/assets/get_schwifty.ttf");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: NewsGothic;
-  src: url("../src/assets/news_gothic_mt/NewsGothicMT.ttf");
-  font-weight: normal;
-  font-style: normal;
-}
 
 body {
   margin: 0;
