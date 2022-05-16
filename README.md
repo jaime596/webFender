@@ -2,4 +2,4 @@
 
 execute comand npm install
 after 
-npm run test :)
+npm start :)
