@@ -1,0 +1,53 @@
+.tituloLogin {
+    font-size: 40px;
+    font-weight: 500;
+}
+
+.bienvenido {
+    font-weight: 500;
+    color: #4af43b;
+    font-size: 70px;
+    padding-bottom: 5%;
+}
+
+.botonLogin {
+    background-color: #4af43b;
+    border-color: #4af43b;
+}
+
+.botonLogin:hover {
+    background-color: #3ed156;
+    border-color: #3ed156;
+}
+
+.botonLogin:focus {
+    background-color: #0ead00;
+    border-color: #0ead00;
+}
+
+
+.ant-popover-buttons .ant-btn-primary {
+    background-color: #4af43b;
+    border-color: #4af43b;
+}
+
+.ant-popover-buttons:hover .ant-btn-primary:hover {
+    background-color: #3ed156;
+    border-color: #3ed156;
+}
+.ant-popover-buttons:focus .ant-btn-primary:focus {
+    background-color: #0ead00;
+    border-color: #0ead00;
+}
+.LogoFormat {
+    width: 80px;
+    margin-top: 2ch;
+}
+
+.ant-divider-horizontal {
+    margin: 0;
+}
+
+.ant-card-bordered {
+    border: 1px solid #4af43b;
+}

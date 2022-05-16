@@ -1,0 +1,14 @@
+.botonDelete {
+    background-color: #ff0000;
+    border-color: #ff0000;
+}
+
+.botonDelete:hover {
+    background-color: #ce0404;
+    border-color: #ce0404;
+}
+
+.botonDelete:focus {
+    background-color: #a50404;
+    border-color: #a50404;
+}
