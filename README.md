@@ -1,2 +1,2 @@
-# Compras-ReactJS
+# RickAndMosrty-ReactJS
 
