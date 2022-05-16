@@ -19,3 +19,4 @@ export const loginUserPost = WS + "/user/login"
 
 export const getCharactersGET = (page) => { return WS + `/character/all?page=${page}` }
 export const getinfoCharacterGET = () => { return WS + `/character/infoCharacter` } 
+export const getinfoPokemonGET = () => { return WS + `/pokemon/detail` } 

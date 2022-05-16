@@ -1,12 +1,13 @@
-import { Avatar, Badge, Button, Card, Col, Image, Input, message, Modal, Row, Spin, Statistic } from 'antd'
+import { Avatar, Badge, Card, Col, Divider, Image, Input, message, Row, Statistic } from 'antd'
 import React, { Component } from 'react'
 import auth from '../../functions/auth'
-import { getinfoCharacterGET } from '../../routes/index'
+import { getinfoCharacterGET, getinfoPokemonGET } from '../../routes/index'
 import moment from "moment";
+import { withRouter } from 'react-router-dom';
 const { Meta } = Card;
 
 
-export default class CardFavCharacter extends Component {
+class CardFavCharacter extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -16,6 +17,9 @@ export default class CardFavCharacter extends Component {
             isModalVisible: false,
             isModalLoading: false,
             isLoadingCard: true,
+            pokemon: {},
+            isLoadingCardPokemon: false,
+            isModalLoadingPokemon: false,
             detail: {}
         }
     }
@@ -23,6 +27,7 @@ export default class CardFavCharacter extends Component {
 
     componentDidMount() {
         this.loadCharacterDetail(this.props.character.idCharacter)
+        this.loadPokemonDetail(this.props.character.idPokemon)
     }
 
     status = (status) => {
@@ -81,7 +86,8 @@ export default class CardFavCharacter extends Component {
                     console.log(result.body)
                     this.setState({
                         character: result.body,
-                        isLoadingCard: false
+                        isLoadingCard: false,
+                        isModalLoading: false
                     })
                 }
 
@@ -92,6 +98,58 @@ export default class CardFavCharacter extends Component {
 
 
     }
+
+    loadPokemonDetail = (id) => {
+        this.setState({
+            isModalLoading: true
+        })
+
+        const Init = {
+            method: "GET",
+            headers: {
+                "Access-Control-Allow-Credentials": true,
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json",
+                "authorization": this.state.authorization,
+                "id": id
+            }
+        };
+
+        fetch(getinfoPokemonGET(), Init)
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                } else if (response.status === 401) {
+                    message.error("Sesión vencida");
+                    auth.logout(() => {
+                        this.props.history.push("/");
+                    });
+                    return null;
+                } else {
+                    message.error("An unexpected error occurred, please try again later");
+                    this.setState({ loadingIngresar: false });
+                    return null;
+                }
+            })
+            .then((result) => {
+                if (result != null) {
+                    this.setState({
+                        pokemon: result.body,
+                        isLoadingCardPokemon: false,
+                        isModalLoadingPokemon: false
+                    })
+                }
+
+            }).catch((error) => {
+                message.error("An unexpected error occurred, please try again later");
+                this.setState({ loadingIngresar: false });
+            });;
+
+
+    }
+
+
+
 
     detail = () => {
         try {
@@ -135,6 +193,26 @@ export default class CardFavCharacter extends Component {
 
     }
 
+    abilities = () => {
+        try {
+            return this.state.pokemon.abilities.map(element => {
+                console.log(element)
+                return <Statistic value={element.ability.name} />
+            })
+        } catch (error) {
+            return null
+        }
+
+    }
+
+    getImagen = () => {
+        try {
+            return <Image src={this.state.pokemon.sprites.front_default} width="30%" />
+        } catch (error) {
+            return null
+        }
+    }
+
     render() {
         return (this.state.isLoadingCard ? <Card style={{ width: '45%', margin: "1%" }}
             loading={this.state.isLoadingCard}>
@@ -143,25 +221,12 @@ export default class CardFavCharacter extends Component {
                 title="Card title"
                 description="This is the description"
             />
-        </Card> :
+        </Card> : <>
             <Card
                 title={this.state.character.name}
                 key={this.state.character.id}
                 bordered={true}
-                style={{ width: '45%', margin: "1%" }}
-            // extra={
-            //     <Button
-            //         loading={this.state.loadingNext}
-            //         className="botonLogin"
-            //         type="primary"
-            //         style={{ width: "100%" }}
-            //         onClick={() => {
-
-            //         }}
-            //     >
-            //         {this.state.character.fav ? "Remove from favorites :C" : "Add to favorites!"}
-            //     </Button>
-            // }
+                style={{ width: '100%', margin: "1%" }}
             >
                 <Row gutter={8} >
                     <Col span={12}>
@@ -180,59 +245,53 @@ export default class CardFavCharacter extends Component {
                                         color={this.status(this.state.character.status)}
                                         text={this.state.character.status + " - " + this.state.character.species} />
                                 </Col>
+
+
                             </Row>
                             <Row gutter={8} justify="start">
                                 <Col >
-                                    <Button
-                                        loading={this.state.loadingNext}
-                                        className="botonLogin"
-                                        type="primary"
-                                        style={{ width: "100%" }}
-                                        onClick={() => {
-                                            this.isModalVisible()
-                                        }}
-                                    >
-                                        Details!
-                                    </Button>
+                                    <Statistic title="species:" value={this.state.character.species} />
                                 </Col>
                             </Row>
+                            <Row gutter={8} justify="start">
+                                <Col >
+                                    <Statistic title="type:" value={this.state.character.type} />
+                                </Col>
+                            </Row>
+
                         </Input.Group>
-                        <Modal
-                            width="70%"
-                            title={this.state.detail.name}
-                            visible={this.state.isModalVisible}
-                            okText="close!"
-                            okButtonProps={{ className: "botonLogin" }}
-                            onCancel={() => {
-                                this.setState({
-                                    isModalVisible: false
-                                })
-                            }}
-                            onOk={() => {
-                                this.setState({
-                                    isModalVisible: false
-                                })
-                            }}
-                            footer={
-                                <Button
-                                    loading={this.state.loadingNext}
-                                    className="botonLogin"
-                                    type="primary"
-                                    block="true"
-                                    style={{ width: "100%" }}
-                                    onClick={() => {
-                                        this.isModalVisible()
-                                    }}
-                                >
-                                    go back!
-                                </Button>}>
-                            {
-                                this.state.isModalLoading ? <Row justify='center' align='middle'><Spin /></Row> : this.detail()
-                            }
-                        </Modal>
                     </Col>
                 </Row>
             </Card>
+            <Divider >VS</Divider>
+            <Card
+                title={this.state.pokemon.name}
+                key={this.state.pokemon.id}
+                bordered={true}
+                style={{ width: '100%', margin: "1%" }}
+            >
+                <Row gutter={8} >
+                    <Col span={12}>
+                        {this.getImagen()}
+                    </Col>
+                    <Col span={12}>
+                        <Input.Group size="default">
+                            <Row gutter={8} justify="start">
+                                <Col >
+                                    <span>Abilities:</span>
+                                    {
+                                        this.abilities()
+                                    }
+                                    <Statistic title="Base experience" value={this.state.pokemon.base_experience}></Statistic>
+                                    <Statistic title="weight" value={this.state.pokemon.weight}></Statistic>
+                                </Col>
+                            </Row>
+                        </Input.Group>
+                    </Col>
+                </Row>
+            </Card> </>
         )
     }
 }
+
+export default withRouter(CardFavCharacter);

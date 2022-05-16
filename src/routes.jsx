@@ -6,6 +6,7 @@ import Login from "./Components/Login";
 import Main from "./Components/Main";
 import Register from "./Components/Register";
 import Profile from "./Components/profile"
+import Randomaizer from "./Components/randomaizer";
 
 function AppRoutes() {
   return (
@@ -21,6 +22,10 @@ function AppRoutes() {
           exact
           path="/profile"
           component={Profile} />
+          <ProtectedRoute
+          exact
+          path="/randomaizer"
+          component={Randomaizer} />
 
       </Switch>
     </div>

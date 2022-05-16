@@ -142,6 +142,28 @@ class Main extends Component {
                         <Divider className='Divider' />
                     </Col>
                 </Row>
+
+                <Row gutter={16} style={{ paddingTop: "1.5%", paddingBottom: "1%" }} align="middle" justify='center'>
+                    <Col>
+                        <Row align="middle" justify='center'>
+                            <Col>
+                                <Button
+                                    loading={this.state.loadingNext}
+                                    className="botonLogin"
+                                    type="primary"
+                                    style={{ width: "100%" }}
+                                    onClick={() => {
+                                        auth.logout(() => {
+                                            this.props.history.push("/randomaizer");
+                                        });
+                                    }}
+                                >
+                                    Randomaizer!
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
                 <Row gutter={16} style={{ paddingTop: "1.5%", paddingBottom: "1%" }}>
                     {
                         this.state.character.map(elemento => {
